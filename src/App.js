@@ -1,24 +1,32 @@
-import logo from './logo.svg';
-import './App.css';
+import { WagmiConfig, createConfig, useAccount } from "wagmi";
+import {
+  ConnectKitProvider,
+  ConnectKitButton,
+  getDefaultConfig,
+} from "connectkit";
+import MyComponent from "./text";
+
+const config = createConfig(
+  getDefaultConfig({
+    walletConnectProjectId: "e7b53371d64a322ae6d669190b6e2fed",
+
+    // Required
+    appName: "TWA",
+    appDescription: "Your App Description",
+    appUrl: "https://family.co", // your app's url
+    appIcon: "https://family.co/logo.png", // your app's icon, no bigger than 1024x1024px (max. 1MB)
+  })
+);
 
 function App() {
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <WagmiConfig config={config}>
+      <ConnectKitProvider>
+        <ConnectKitButton />
+        <MyComponent/>
+      </ConnectKitProvider>
+    </WagmiConfig>
   );
 }
 
